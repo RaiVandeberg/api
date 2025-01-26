@@ -21,7 +21,7 @@ export function routesHandler(req, res) {
 
         req.query = query ? extractQueryParams(query) : {}
 
-        return route.controller(req, res)
+        return route.controller({req, res, database})
     }
 
     return res.writeHead(404).end("Produto não encontrado")

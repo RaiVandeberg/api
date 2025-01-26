@@ -1,5 +1,16 @@
+import fs from "node:fs/promises"
+
+const DATABASE_PATH = new URL("db.json", import.meta.url)
+
 export class DataBase {
     database = {}
+    constructor(){
+       this.persist()
+    }
+
+    persist(){
+      fs.writeFile(DATABASE_PATH, JSON.stringify(this.database))
+    }
 
     insert(table, data){
         if(Array.isArray(this.database[table])){
@@ -8,6 +19,8 @@ export class DataBase {
         } else {
             this.database[table] = [data]
         }
+
+        this.persist()
 
     }
 

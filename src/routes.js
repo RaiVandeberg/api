@@ -4,8 +4,9 @@ export const routes = [
     {
         method: "GET",
         path: "/produtcs",
-        controller: (req, res) => {
-            return res.end(JSON.stringify(req.query))
+        controller: ({req, res, database}) => {
+            const produtcs = database.select("produtcs")
+            return res.end(JSON.stringify(produtcs))
 
         },
     },
@@ -13,15 +14,19 @@ export const routes = [
     {
         method: "POST",
         path: "/produtcs",
-        controller: (req, res) => {
-            return res.writeHead(201).end(JSON.stringify(req.body))
+        controller: ({req, res, database}) => {
+            const {name, price} = req.body
+
+            database.insert("produtcs", {name, price})
+
+            return res.writeHead(201).end()
         },
     },
 
     {
         method: "DELETE",
         path: "/produtcs/:id",
-        controller: (req, res) => {
+        controller: ({req, res}) => {
             return res.end("Produto removido com ID: " + req.params.id)
         },
     },
