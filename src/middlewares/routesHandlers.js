@@ -4,6 +4,7 @@ import { DataBase } from "../database.js";
 
 const database = new DataBase()
 
+
 export function routesHandler(req, res) {
     const route = routes.find((route) => {
         return route.method === req.method && route.path.test(req.url)
